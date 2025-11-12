@@ -1,98 +1,345 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Marketfy API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Authentication & Authorization**: JWT-based authentication with bcrypt password hashing
+- **User Management**: User profiles with bio, interests, and customizable details
+- **Product Catalog**: Advanced product search with pagination, filtering, and sorting
+- **Shopping Cart**: (Frontend-managed with localStorage)
+- **Orders**: Complete order management with history and tracking
+- **Wishlist**: User-specific wishlist functionality
+- **Security**:
+  - Helmet for security headers
+  - Rate limiting (100 requests/minute)
+  - CORS configuration
+  - Global exception handling
+- **Database**: PostgreSQL with Prisma ORM
+- **Validation**: Comprehensive input validation with class-validator
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- **Framework**: NestJS 11
+- **Database**: PostgreSQL
+- **ORM**: Prisma 6
+- **Authentication**: JWT with Passport.js
+- **Password Hashing**: bcrypt
+- **Validation**: class-validator & class-transformer
+- **Security**: Helmet, @nestjs/throttler
 
+## Prerequisites
+
+- Node.js (v18 or higher)
+- PostgreSQL (v14 or higher)
+- pnpm (recommended) or npm
+
+## Installation
+
+1. Clone the repository and navigate to the API folder:
 ```bash
-$ pnpm install
+cd marketfy-api
 ```
 
-## Compile and run the project
-
+2. Install dependencies:
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Run tests
-
+3. Set up your environment variables:
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
+Edit `.env` with your database credentials:
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/marketfy?schema=public"
+JWT_SECRET="your-super-secret-jwt-key-change-this"
+PORT="3000"
+FRONTEND_URL="http://localhost:4200"
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. Run database migrations:
+```bash
+pnpm prisma migrate dev
+```
 
-## Resources
+5. Seed the database with demo data:
+```bash
+pnpm seed
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Running the API
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Development mode
+```bash
+pnpm start:dev
+```
 
-## Support
+### Production mode
+```bash
+pnpm build
+pnpm start:prod
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The API will be available at `http://localhost:3000`
 
-## Stay in touch
+## API Endpoints
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Authentication
+
+#### Register
+```http
+POST /auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "displayName": "John Doe"
+}
+```
+
+#### Login
+```http
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+Response: { "access_token": "jwt-token", "userId": 1 }
+```
+
+### Products
+
+#### List Products
+```http
+GET /products?page=1&limit=12&q=search&tag=electronics&sortBy=price&sortOrder=asc
+```
+
+Query Parameters:
+- `page` (optional): Page number (default: 1)
+- `limit` (optional): Items per page, max 100 (default: 12)
+- `q` (optional): Search query (searches name, description, tags)
+- `tag` (optional): Filter by specific tag
+- `sortBy` (optional): Sort field: name, price, createdAt (default: createdAt)
+- `sortOrder` (optional): asc or desc (default: desc)
+
+#### Get Product by ID
+```http
+GET /products/:id
+```
+
+### Orders (Protected)
+
+All order endpoints require JWT authentication via `Authorization: Bearer <token>` header.
+
+#### Create Order
+```http
+POST /orders
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "product": { "id": 1, "name": "Product", "price": 99.99 },
+      "qty": 2
+    }
+  ],
+  "total": 199.98
+}
+```
+
+#### List User Orders
+```http
+GET /orders?page=1&limit=20
+Authorization: Bearer <token>
+```
+
+#### Get Order by ID
+```http
+GET /orders/:orderId
+Authorization: Bearer <token>
+```
+
+### Users (Protected)
+
+#### Get Current User Profile
+```http
+GET /users/me
+Authorization: Bearer <token>
+```
+
+#### Update User Profile
+```http
+PATCH /users/me
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "displayName": "New Name",
+  "firstName": "John",
+  "lastName": "Doe",
+  "bio": "My bio",
+  "interests": ["tech", "gaming"]
+}
+```
+
+### Wishlist (Protected)
+
+#### Get User Wishlist
+```http
+GET /wishlist
+Authorization: Bearer <token>
+```
+
+#### Add to Wishlist
+```http
+POST /wishlist
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "productId": 1
+}
+```
+
+#### Remove from Wishlist by Product
+```http
+DELETE /wishlist?productId=1
+Authorization: Bearer <token>
+```
+
+#### Remove from Wishlist by ID
+```http
+DELETE /wishlist/:id
+Authorization: Bearer <token>
+```
+
+## Database Schema
+
+### User
+- `id`: Auto-increment primary key
+- `email`: Unique email address
+- `passwordHash`: Bcrypt hashed password
+- `displayName`: Display name
+- `firstName`: First name (optional)
+- `lastName`: Last name (optional)
+- `bio`: User biography (optional)
+- `interests`: Array of interest tags
+- `createdAt`: Creation timestamp
+- `updatedAt`: Last update timestamp
+
+### Product
+- `id`: Auto-increment primary key
+- `name`: Product name
+- `price`: Decimal price
+- `imageUrl`: Product image URL (optional)
+- `tags`: Array of product tags
+- `description`: Product description (optional)
+- `createdAt`: Creation timestamp
+
+### Order
+- `id`: Auto-increment primary key
+- `orderId`: UUID unique identifier
+- `userId`: Foreign key to User
+- `items`: JSON array of order items
+- `total`: Order total (Decimal)
+- `createdAt`: Creation timestamp
+
+### WishlistItem
+- `id`: Auto-increment primary key
+- `userId`: Foreign key to User
+- `productId`: Foreign key to Product
+- `createdAt`: Creation timestamp
+- Unique constraint on `(userId, productId)`
+
+## Demo Credentials
+
+After seeding, you can use these credentials to test:
+
+**User 1:**
+- Email: `demo@marketfy.test`
+- Password: `password123`
+
+**User 2:**
+- Email: `john@marketfy.test`
+- Password: `password123`
+
+## Scripts
+
+- `pnpm build` - Build the application
+- `pnpm start` - Start the application
+- `pnpm start:dev` - Start in development mode with watch
+- `pnpm start:debug` - Start in debug mode
+- `pnpm start:prod` - Start in production mode
+- `pnpm lint` - Run ESLint
+- `pnpm test` - Run unit tests
+- `pnpm test:e2e` - Run end-to-end tests
+- `pnpm seed` - Seed the database
+
+## Security Features
+
+1. **Helmet**: Sets security-related HTTP headers
+2. **Rate Limiting**: 100 requests per minute per IP
+3. **CORS**: Configured for frontend origin
+4. **JWT Authentication**: Secure token-based authentication
+5. **Password Hashing**: bcrypt with 10 salt rounds
+6. **Input Validation**: Comprehensive DTO validation
+7. **Exception Handling**: Global exception filter with consistent error responses
+
+## Project Structure
+
+```
+src/
+├── auth/               # Authentication module (JWT, login, register)
+├── common/             # Shared resources (filters, guards, etc.)
+│   └── filters/        # Global exception filters
+├── orders/             # Orders module (create, list, get)
+├── prisma/             # Prisma service module
+├── products/           # Products module (search, filter, pagination)
+├── users/              # Users module (profile management)
+├── wishlist/           # Wishlist module (add, remove, list)
+├── app.module.ts       # Root application module
+└── main.ts             # Application entry point
+```
+
+## Enhancements Made
+
+### Security
+- ✅ Added JWT authentication to all wishlist endpoints
+- ✅ Implemented Helmet for security headers
+- ✅ Added rate limiting (100 requests/minute)
+- ✅ Improved CORS configuration
+- ✅ Global exception filter for consistent error handling
+
+### Features
+- ✅ Added `bio` field to User model
+- ✅ Enhanced product search (name, description, tags)
+- ✅ Added product filtering by tag
+- ✅ Added product sorting (name, price, createdAt)
+- ✅ Created proper service layer for Orders
+- ✅ Excluded passwordHash from user responses
+
+### Code Quality
+- ✅ Added DTOs with validation for all modules
+- ✅ Implemented proper error handling with exceptions
+- ✅ Improved validation with class-validator
+- ✅ Better code organization and separation of concerns
+- ✅ Enhanced seed data with 30 realistic products
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run tests: `pnpm test`
+4. Run linting: `pnpm lint`
+5. Submit a pull request
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED - Private project
