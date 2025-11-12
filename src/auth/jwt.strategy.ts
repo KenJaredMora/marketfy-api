@@ -6,15 +6,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      // same secret you set in JwtModule
       secretOrKey: process.env.JWT_SECRET || 'super_secret_change_me',
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
     });
   }
-
   async validate(payload: { sub: number; email: string }) {
-    // This becomes req.user
+    // attaches to request.user
     return { userId: payload.sub, email: payload.email };
   }
 }
