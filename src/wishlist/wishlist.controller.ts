@@ -1,29 +1,36 @@
-import { Controller, Get, Post, Delete, Query, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Query, Body, Param, ParseIntPipe, UseGuards, Req } from '@nestjs/common';
 import { WishlistService } from './wishlist.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AddToWishlistDto } from './dto';
 
 @Controller('wishlist')
+@UseGuards(JwtAuthGuard)
 export class WishlistController {
   constructor(private svc: WishlistService) {}
 
   @Get()
-  list(@Query('userId') userId: string) {
-    return this.svc.listByUser(Number(userId || 1));
+  list(@Req() req: any) {
+    const userId = req.user.userId as number;
+    return this.svc.listByUser(userId);
   }
 
   @Post()
-  add(@Body() body: { userId: number; productId: number }) {
-    return this.svc.add(Number(body.userId), Number(body.productId));
+  add(@Body() body: AddToWishlistDto, @Req() req: any) {
+    const userId = req.user.userId as number;
+    return this.svc.add(userId, body.productId);
   }
 
   // delete by wishlist row id (used by list page)
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Query('userId') userId: string) {
-    return this.svc.remove(id, Number(userId || 1));
+  remove(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
+    const userId = req.user.userId as number;
+    return this.svc.remove(id, userId);
   }
 
   // convenience: delete by product (used by heart toggle)
   @Delete()
-  removeByProduct(@Query('userId') userId: string, @Query('productId') productId: string) {
-    return this.svc.removeByProduct(Number(userId || 1), Number(productId));
+  removeByProduct(@Query('productId') productId: string, @Req() req: any) {
+    const userId = req.user.userId as number;
+    return this.svc.removeByProduct(userId, Number(productId));
   }
 }

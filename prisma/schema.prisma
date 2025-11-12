@@ -15,9 +15,9 @@ model User {
   displayName String
   firstName   String?
   lastName    String?
+  bio         String?
   interests   String[] @default([])
 
-  // 👇 ESTA es la columna que falta en tu DB
   updatedAt   DateTime @updatedAt
 
   orders      Order[]
