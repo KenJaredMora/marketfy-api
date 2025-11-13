@@ -37,21 +37,25 @@ Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and 
 ## Installation
 
 1. Clone the repository and navigate to the API folder:
+
 ```bash
 cd marketfy-api
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Set up your environment variables:
+
 ```bash
 cp .env.example .env
 ```
 
 Edit `.env` with your database credentials:
+
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/marketfy?schema=public"
 JWT_SECRET="your-super-secret-jwt-key-change-this"
@@ -60,11 +64,13 @@ FRONTEND_URL="http://localhost:4200"
 ```
 
 4. Run database migrations:
+
 ```bash
 pnpm prisma migrate dev
 ```
 
 5. Seed the database with demo data:
+
 ```bash
 pnpm seed
 ```
@@ -72,11 +78,13 @@ pnpm seed
 ## Running the API
 
 ### Development mode
+
 ```bash
 pnpm start:dev
 ```
 
 ### Production mode
+
 ```bash
 pnpm build
 pnpm start:prod
@@ -89,6 +97,7 @@ The API will be available at `http://localhost:3000`
 ### Authentication
 
 #### Register
+
 ```http
 POST /auth/register
 Content-Type: application/json
@@ -101,6 +110,7 @@ Content-Type: application/json
 ```
 
 #### Login
+
 ```http
 POST /auth/login
 Content-Type: application/json
@@ -116,11 +126,13 @@ Response: { "access_token": "jwt-token", "userId": 1 }
 ### Products
 
 #### List Products
+
 ```http
 GET /products?page=1&limit=12&q=search&tag=electronics&sortBy=price&sortOrder=asc
 ```
 
 Query Parameters:
+
 - `page` (optional): Page number (default: 1)
 - `limit` (optional): Items per page, max 100 (default: 12)
 - `q` (optional): Search query (searches name, description, tags)
@@ -129,6 +141,7 @@ Query Parameters:
 - `sortOrder` (optional): asc or desc (default: desc)
 
 #### Get Product by ID
+
 ```http
 GET /products/:id
 ```
@@ -138,6 +151,7 @@ GET /products/:id
 All order endpoints require JWT authentication via `Authorization: Bearer <token>` header.
 
 #### Create Order
+
 ```http
 POST /orders
 Authorization: Bearer <token>
@@ -155,12 +169,14 @@ Content-Type: application/json
 ```
 
 #### List User Orders
+
 ```http
 GET /orders?page=1&limit=20
 Authorization: Bearer <token>
 ```
 
 #### Get Order by ID
+
 ```http
 GET /orders/:orderId
 Authorization: Bearer <token>
@@ -169,12 +185,14 @@ Authorization: Bearer <token>
 ### Users (Protected)
 
 #### Get Current User Profile
+
 ```http
 GET /users/me
 Authorization: Bearer <token>
 ```
 
 #### Update User Profile
+
 ```http
 PATCH /users/me
 Authorization: Bearer <token>
@@ -192,12 +210,14 @@ Content-Type: application/json
 ### Wishlist (Protected)
 
 #### Get User Wishlist
+
 ```http
 GET /wishlist
 Authorization: Bearer <token>
 ```
 
 #### Add to Wishlist
+
 ```http
 POST /wishlist
 Authorization: Bearer <token>
@@ -209,12 +229,14 @@ Content-Type: application/json
 ```
 
 #### Remove from Wishlist by Product
+
 ```http
 DELETE /wishlist?productId=1
 Authorization: Bearer <token>
 ```
 
 #### Remove from Wishlist by ID
+
 ```http
 DELETE /wishlist/:id
 Authorization: Bearer <token>
@@ -223,6 +245,7 @@ Authorization: Bearer <token>
 ## Database Schema
 
 ### User
+
 - `id`: Auto-increment primary key
 - `email`: Unique email address
 - `passwordHash`: Bcrypt hashed password
@@ -231,19 +254,23 @@ Authorization: Bearer <token>
 - `lastName`: Last name (optional)
 - `bio`: User biography (optional)
 - `interests`: Array of interest tags
-- `createdAt`: Creation timestamp
 - `updatedAt`: Last update timestamp
 
 ### Product
+
+- `id`: Auto-increment primary key
 - `id`: Auto-increment primary key
 - `name`: Product name
 - `price`: Decimal price
 - `imageUrl`: Product image URL (optional)
-- `tags`: Array of product tags
-- `description`: Product description (optional)
 - `createdAt`: Creation timestamp
 
 ### Order
+
+- `id`: Auto-increment primary key
+
+### Order
+
 - `id`: Auto-increment primary key
 - `orderId`: UUID unique identifier
 - `userId`: Foreign key to User
@@ -252,22 +279,26 @@ Authorization: Bearer <token>
 - `createdAt`: Creation timestamp
 
 ### WishlistItem
+
 - `id`: Auto-increment primary key
 - `userId`: Foreign key to User
 - `productId`: Foreign key to Product
 - `createdAt`: Creation timestamp
 - Unique constraint on `(userId, productId)`
-
-## Demo Credentials
-
 After seeding, you can use these credentials to test:
 
 **User 1:**
+
 - Email: `demo@marketfy.test`
 - Password: `password123`
 
 **User 2:**
+
 - Email: `john@marketfy.test`
+- Password: `password123`
+
+## Scripts
+
 - Password: `password123`
 
 ## Scripts
@@ -287,7 +318,9 @@ After seeding, you can use these credentials to test:
 1. **Helmet**: Sets security-related HTTP headers
 2. **Rate Limiting**: 100 requests per minute per IP
 3. **CORS**: Configured for frontend origin
-4. **JWT Authentication**: Secure token-based authentication
+
+## Project Structure
+
 5. **Password Hashing**: bcrypt with 10 salt rounds
 6. **Input Validation**: Comprehensive DTO validation
 7. **Exception Handling**: Global exception filter with consistent error responses
@@ -303,23 +336,26 @@ src/
 ├── prisma/             # Prisma service module
 ├── products/           # Products module (search, filter, pagination)
 ├── users/              # Users module (profile management)
-├── wishlist/           # Wishlist module (add, remove, list)
-├── app.module.ts       # Root application module
-└── main.ts             # Application entry point
-```
-
 ## Enhancements Made
 
 ### Security
+
 - ✅ Added JWT authentication to all wishlist endpoints
-- ✅ Implemented Helmet for security headers
+
+## Enhancements Made
+- ✅ Global exception filter for consistent error handling
+
+### Product Features
+
+- ✅ Added `bio` field to User model
 - ✅ Added rate limiting (100 requests/minute)
 - ✅ Improved CORS configuration
 - ✅ Global exception filter for consistent error handling
+- ✅ Excluded passwordHash from user responses
 
-### Features
-- ✅ Added `bio` field to User model
-- ✅ Enhanced product search (name, description, tags)
+### Code Quality
+
+- ✅ Added DTOs with validation for all modules
 - ✅ Added product filtering by tag
 - ✅ Added product sorting (name, price, createdAt)
 - ✅ Created proper service layer for Orders
