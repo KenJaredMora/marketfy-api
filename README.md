@@ -327,7 +327,7 @@ After seeding, you can use these credentials to test:
 
 ## project Structure
 
-```
+```md
 src/
 ├── auth/               # Authentication module (JWT, login, register)
 ├── common/             # Shared resources (filters, guards, etc.)
