@@ -36,19 +36,19 @@ Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and 
 
 ## Installation
 
-1. Clone the repository and navigate to the API folder:
+   Clone the repository and navigate to the API folder:
 
 ```bash
 cd marketfy-api
 ```
 
-2. Install dependencies:
+   Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. Set up your environment variables:
+   Set up your environment variables:
 
 ```bash
 cp .env.example .env
@@ -63,13 +63,13 @@ PORT="3000"
 FRONTEND_URL="http://localhost:4200"
 ```
 
-4. Run database migrations:
+   Run database migrations:
 
 ```bash
 pnpm prisma migrate dev
 ```
 
-5. Seed the database with demo data:
+   Seed the database with demo data:
 
 ```bash
 pnpm seed
@@ -269,7 +269,7 @@ Authorization: Bearer <token>
 
 - `id`: Auto-increment primary key
 
-### Order
+### order
 
 - `id`: Auto-increment primary key
 - `orderId`: UUID unique identifier
@@ -301,7 +301,7 @@ After seeding, you can use these credentials to test:
 
 - Password: `password123`
 
-## Scripts
+## scripts
 
 - `pnpm build` - Build the application
 - `pnpm start` - Start the application
@@ -321,11 +321,11 @@ After seeding, you can use these credentials to test:
 
 ## Project Structure
 
-5. **Password Hashing**: bcrypt with 10 salt rounds
-6. **Input Validation**: Comprehensive DTO validation
-7. **Exception Handling**: Global exception filter with consistent error responses
+   **Password Hashing**: bcrypt with 10 salt rounds
+   **Input Validation**: Comprehensive DTO validation
+   **Exception Handling**: Global exception filter with consistent error responses
 
-## Project Structure
+## project Structure
 
 ```
 src/
