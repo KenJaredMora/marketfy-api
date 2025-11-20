@@ -1,9 +1,54 @@
-# compiled output
-/dist
-/node_modules
-/build
+# ====================================================================================
+# MARKETFY API .GITIGNORE
+# ====================================================================================
 
+# ====================================================================================
+# ⚠️ SENSITIVE FILES - StayInLocal - NEVER COMMIT THESE ⚠️
+# ====================================================================================
+
+# Environment Variables - StayInLocal (Database passwords, JWT secrets, API keys)
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+!.env.example
+
+# Database Files - StayInLocal (Contains real user data)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.sql
+backups/
+dumps/
+
+# AWS & Cloud Credentials - StayInLocal
+.aws/
+*.pem
+*.key
+credentials
+config
+
+# Secrets - StayInLocal
+secrets.yml
+secrets.json
+*.secret
+
+# ====================================================================================
+# Compiled Output
+# ====================================================================================
+/dist
+/build
+/node_modules
+/generated/prisma
+
+# ====================================================================================
 # Logs
+# ====================================================================================
 logs
 *.log
 npm-debug.log*
@@ -12,14 +57,22 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
+# ====================================================================================
+# OS Files
+# ====================================================================================
 .DS_Store
+Thumbs.db
+*~
 
-# Tests
+# ====================================================================================
+# Tests & Coverage
+# ====================================================================================
 /coverage
 /.nyc_output
 
-# IDEs and editors
+# ====================================================================================
+# IDEs and Editors
+# ====================================================================================
 /.idea
 .project
 .classpath
@@ -35,24 +88,23 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# temp directory
+# ====================================================================================
+# Temporary Files
+# ====================================================================================
 .temp
 .tmp
+*.tmp
+*.bak
 
-# Runtime data
+# ====================================================================================
+# Runtime Data
+# ====================================================================================
 pids
 *.pid
 *.seed
 *.pid.lock
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# ====================================================================================
+# Diagnostic Reports
+# ====================================================================================
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-/generated/prisma
