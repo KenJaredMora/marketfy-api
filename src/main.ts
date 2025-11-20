@@ -39,6 +39,11 @@ async function bootstrap() {
   // Global exception filter
   app.useGlobalFilters(new AllExceptionsFilter());
 
+  // Global API prefix (excluding health endpoint)
+  app.setGlobalPrefix('api', {
+    exclude: ['/health'],
+  });
+
   // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
@@ -53,6 +58,6 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log(`🚀 Marketfy API is running on http://localhost:${port}`);
+  console.log(`🚀 Marketfy API is running on http://localhost:${port}/api`);
 }
 bootstrap();
