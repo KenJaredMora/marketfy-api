@@ -2,6 +2,22 @@
 
 Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and PostgreSQL.
 
+## 🌐 Production Deployment
+
+**Live API**: <http://marketfy-alb-1492993669.us-east-1.elb.amazonaws.com/api/products>
+
+**Demo Credentials:**
+
+- Email: `demo@marketfy.test`
+- Password: `password123`
+
+The API is deployed on AWS ECS with:
+
+- Container: Docker (multi-stage build)
+- Database: AWS RDS PostgreSQL
+- Load Balancer: Application Load Balancer
+- Health Check: `/health` endpoint
+
 ## Features
 
 - **Authentication & Authorization**: JWT-based authentication with bcrypt password hashing
@@ -375,7 +391,3 @@ src/
 3. Run tests: `pnpm test`
 4. Run linting: `pnpm lint`
 5. Submit a pull request
-
-## License
-
-UNLICENSED - Private project
