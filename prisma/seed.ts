@@ -1,5 +1,5 @@
 // prisma/seed.ts
-import { PrismaClient, Prisma } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
 
@@ -50,7 +50,7 @@ const DEMO_PRODUCTS = [
 ];
 
 async function main() {
-  console.log('🌱 Starting seed...');
+  console.log(' Starting seed...');
 
   // 1) Create demo users
   const password = 'password123';
@@ -84,7 +84,7 @@ async function main() {
     },
   });
 
-  console.log(`✅ Created ${2} users`);
+  console.log(` Created ${2} users`);
 
   // 2) Seed products
   const existingCount = await prisma.product.count();
@@ -92,9 +92,9 @@ async function main() {
     await prisma.product.createMany({
       data: DEMO_PRODUCTS as Prisma.ProductCreateManyInput[],
     });
-    console.log(`✅ Created ${DEMO_PRODUCTS.length} products`);
+    console.log(` Created ${DEMO_PRODUCTS.length} products`);
   } else {
-    console.log(`⏭️  Skipped products (${existingCount} already exist)`);
+    console.log(`⏭  Skipped products (${existingCount} already exist)`);
   }
 
   // 3) Create sample orders
@@ -132,11 +132,11 @@ async function main() {
       },
     });
 
-    console.log(`✅ Created ${2} sample orders`);
+    console.log(` Created ${2} sample orders`);
   }
 
-  console.log('\n🎉 Seed completed successfully!');
-  console.log('\n📋 Demo credentials:');
+  console.log('\n Seed completed successfully!');
+  console.log('\n Demo credentials:');
   console.log('   Email: demo@marketfy.test');
   console.log('   Password: password123');
   console.log('\n   Email: john@marketfy.test');
@@ -145,7 +145,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Seed failed:', e);
+    console.error('x Seed failed:', e);
     process.exit(1);
   })
   .finally(() => prisma.$disconnect());
