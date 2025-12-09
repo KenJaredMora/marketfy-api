@@ -1,4 +1,4 @@
-# Marketfy API
+# Marketfy API (BACKEND PROJECT)
 
 Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and PostgreSQL.
 
