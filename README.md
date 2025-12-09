@@ -5,6 +5,7 @@ Backend API for the Marketfy e-commerce platform built with NestJS, Prisma, and 
 ## 🌐 Production Deployment
 
 **Live API**: <http://marketfy-alb-1492993669.us-east-1.elb.amazonaws.com/api/products>
+Note: For security purposes just reacheable with IP.
 
 **Demo Credentials:**
 
